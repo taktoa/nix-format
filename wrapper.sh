@@ -31,7 +31,7 @@ function nixFormatConvert () {
     INPUT="$1"
     OUTPUT="$2"
 
-    emacs --quick --script "@NIX_FORMAT_SCRIPT@" "$INPUT" "$OUTPUT" &>/dev/null
+    emacs --quick --script "@NIX_FORMAT_SCRIPT@" "$INPUT" "$OUTPUT"
 }
 
 function nixFormatReplace () {
@@ -62,13 +62,13 @@ function nixFormatCheck () {
     DIFFERENCE="$(diff "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix")"
 
     if test -z "${DIFFERENCE}"; then
+        rm -rf "${TEMPORARY}"
         return 0
     else
         diff "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix"
+        rm -rf "${TEMPORARY}"
         return 100
     fi
-
-    rm -rf "${TEMPORARY}"
 }
 
 function checkFile () {
