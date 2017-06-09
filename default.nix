@@ -16,7 +16,7 @@ rec {
       coreutils
       emacs
       diffutils
-      diffoscope
+      meld
     ];
   };
 

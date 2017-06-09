@@ -59,17 +59,14 @@ function nixFormatCheck () {
 
     nixFormatConvert "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix"
 
-    diffoscope --html - "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix"
+    DIFFERENCE="$(diff "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix")"
 
-    # DIFFERENCE="$(diff "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix")"
-    #
-    # if test -z "${DIFFERENCE}"; then
-    #     return 0
-    # else
-    #     diff -y -W200 "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix" \
-    #         | colordiff --color=always --difftype=diffy
-    #     return 1
-    # fi
+    if test -z "${DIFFERENCE}"; then
+        return 0
+    else
+        meld "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix"
+        return 100
+    fi
 
     rm -rf "${TEMPORARY}"
 }
