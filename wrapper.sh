@@ -64,7 +64,7 @@ function nixFormatCheck () {
     if test -z "${DIFFERENCE}"; then
         return 0
     else
-        meld "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix"
+        diff "${TEMPORARY}/input.nix" "${TEMPORARY}/output.nix"
         return 100
     fi
 
